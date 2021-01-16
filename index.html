@@ -27,21 +27,25 @@
       <h1 class="display-3">Work Day Scheduler</h1>
       <p class="lead">A simple calendar app for scheduling your work day</p>
       <p id="currentDay" class="lead"></p>
+      <h4>
+        Today is <div id="currentDate"></div>
+        <!--Current Time: <div id="currentTime"></div>     -->
+      </h4>
+
+
     </header>
     <div class="container">
       <div id="calendar"></div>
+    <!--
       <form>
         <label for="timeIndicator"> times[i]</label>
         <textarea rows="4" id="userInput"></textarea>
         <input type="button" value="Save">
       </form>
     </div>
-
+  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <!--
-    <script src="./luxon.js"></script>
-    -->
+    <script src="https://cdn.jsdelivr.net/npm/luxon@1.25.0/build/global/luxon.min.js"></script>
     <script src="./index.js"></script>
   </body>
 </html>
