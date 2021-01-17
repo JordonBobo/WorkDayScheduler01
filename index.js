@@ -6,7 +6,7 @@ var localTime = DateTime.local();
 var rightNow = localTime.c.hour;
 
 
-console.log(rightNow)   
+
 
 
 //Header date label
@@ -24,7 +24,6 @@ for (let i = 0; i < times.length; i++) {
     if (times[i] < 12){
         var morning = times[i] + " AM";
         addTime(morning, times[i]); 
-        console.log(times[i]);            //This consol log works, but none after
     }
     //pm time slots
     else if (times[i] === 12) {
@@ -33,7 +32,6 @@ for (let i = 0; i < times.length; i++) {
     }
     else if (times[i] > 12) {
         var afternoon = times[i] - 12 + " PM";
-        console.log(afternoon);  
          addTime(afternoon, times[i]);
     }
 
@@ -41,13 +39,12 @@ for (let i = 0; i < times.length; i++) {
 //time slot, x is the text displayed, y is the ID
 function addTime(x, y){
     var timeSlot = $("<div>").text(x);
-    console.log(timeSlot);                     //This console log is not being shown
     $("#calendar").append(timeSlot);
-    $(timeSlot).attr("id", x);
+    $(timeSlot).attr("id", "timeSlot" + y);
     relativeTime(y, timeSlot);
 //Add save button
-    var timeSlot3 = $('<input>').attr({'type': 'button', 'value': 'save', 'class': 'saveBtn'});
-    $(timeSlot).append(timeSlot3);
+    // var timeSlot3 = $('<input>').attr({'id': "timeSlot" + y, 'type': 'button', 'value': 'save', 'class': 'saveBtn'});
+    // $(timeSlot).append(timeSlot3);
 
 }
 
@@ -58,15 +55,15 @@ function addTime(x, y){
 function relativeTime (y,a) {
     // past
         if (y < rightNow) {
-            addTextArea("past", a);
+            addTextArea("past", a, y);
         }
     //present
         else if (y === rightNow) {
-           addTextArea("present", a);
+           addTextArea("present", a, y);
         }
     //Future
         else {
-            addTextArea("future", a);
+            addTextArea("future", a, y);
         }
 
     }
@@ -74,19 +71,36 @@ function relativeTime (y,a) {
     
     
     //text area
-    function addTextArea(z,b) {
+    function addTextArea(z,b, ID) {
         var timeSlot2 = $("<textarea>");
         $(b).append(timeSlot2);
-        timeSlot2.attr("class", z);
+        timeSlot2.attr({"class": z, "id" : "text" + ID});
+        // console.log(timeSlot2.attr('id'))
+        timeSlot2.text( localStorage.getItem(timeSlot2.attr('id')))
+        // console.log(localStorage.getItem(timeSlot2.attr('id')))
     }
 }
 
+$(".saveBtn").on("click", function() {
+    for (let i = 0; i < times.length; i++) {
+        var eachHour = eval("$('#text" + times[i] + "')");
+        var eachHour2 = "text" + times[i];
+        var savedText = eachHour.val();
+        console.log(times[i])
+        localStorage.setItem (eachHour2, savedText);
+    }
+  });
 
 
-
-
-
-
+  $(".clearBtn").on("click", function() {
+    for (let i = 0; i < times.length; i++) {
+        var eachHour = eval("$('#text" + times[i] + "')");
+        var eachHour2 = "text" + times[i];
+        eachHour.text("")
+        // console.log(times[i])
+        localStorage.removeItem(eachHour2)
+    }
+  });
 
 
 
